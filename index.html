@@ -340,6 +340,53 @@
           rgba(255, 59, 59, 0)
         );
       }
+
+      /* Education */
+.edu-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .edu-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.edu-card {
+  background: var(--card);
+  border: 1px solid red;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.edu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+.edu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.edu-icon {
+  font-size: 1.6rem;
+  display: flex;
+}
+.edu-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.edu-card .meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.edu-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
       .entry {
         position: relative;
         margin: 16px 0 22px;
@@ -528,7 +575,7 @@
       <section id="projects" class="reveal">
         <h2>Projects</h2>
         <div class="grid">
-          <article class="card">
+          <article class="card" style="border: 1px solid red;">
             <img
               class="thumb"
               src="supertots.png"
@@ -556,7 +603,7 @@
             </div>
           </article>
 
-          <article class="card">
+          <article class="card" style="border: 1px solid red;">
             <img
               class="thumb"
               src="PhoneStore.png"
@@ -582,6 +629,53 @@
           </article>
         </div>
       </section>
+
+      <!-- Education -->
+<section id="education" class="reveal">
+  <h2>Education</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-header">
+        <span class="edu-icon">📊</span>
+        <div>
+          <h3>Certificate in Data Analytics with Power BI</h3>
+          <div class="meta">2025 · Kyouth at Excelerate Asia</div>
+        </div>
+      </div>
+      <p>
+        Gained hands-on skills in creating interactive dashboards, data visualization, and business intelligence reporting using Microsoft Power BI. Learned to clean, transform, and analyze datasets, as well as apply data storytelling techniques for actionable insights.
+      </p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-header">
+        <span class="edu-icon">🎓</span>
+        <div>
+          <h3>Bachelor of Information Technology (Hons.)</h3>
+          <div class="meta">2022 — 2025 · Universiti Teknologi MARA (UiTM)</div>
+        </div>
+      </div>
+      <p>
+        Graduated with a strong foundation in full-stack development, databases, and software engineering. Completed a final year project titled <strong>“Supertots”</strong>, a full-stack daycare management system.
+      </p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-header">
+        <span class="edu-icon">💻</span>
+        <div>
+          <h3>Diploma in Computer Science</h3>
+          <div class="meta">2019 — 2022 · Universiti Teknologi MARA (UiTM)</div>
+        </div>
+      </div>
+      <p>
+        Built a solid foundation in programming, algorithms, database systems, and web development. Gained practical experience in software design, problem-solving, and teamwork through academic projects and assignments.
+      </p>
+    </div>
+  </div>
+</section>
+
+
 
       <!-- Experience -->
       <section id="experience" class="reveal">
