@@ -303,6 +303,10 @@
             display: inline-block;
         }
 
+        button.btn {
+            font-family: inherit;   /* buttons don't inherit the page font by default */
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, var(--accent), #cc2e2e);
             color: white;
@@ -401,133 +405,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Project card buttons */
-        .project-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        
-        button.btn {
-            font-family: inherit;   /* buttons don't inherit the page font by default */
-        }
-        
-        /* Screenshot popup */
-        .preview-dialog {
-            border: none;
-            padding: 0;
-            background: transparent;
-            color: var(--text);
-            width: min(1100px, 94vw);
-            max-width: none;
-            max-height: 92vh;
-            margin: auto;
-            overflow: visible;
-        }
-        
-        .preview-dialog[open] {
-            animation: previewIn 0.25s ease-out;
-        }
-        
-        @keyframes previewIn {
-            from { opacity: 0; transform: translateY(16px) scale(0.98); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        
-        .preview-dialog::backdrop {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(6px);
-        }
-        
-        .preview-box {
-            background: var(--card);
-            border: 1px solid rgba(255, 59, 59, 0.3);
-            border-radius: 20px;
-            box-shadow: var(--glow), 0 30px 80px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
-        }
-        
-        .preview-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        
-        .preview-title {
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-        
-        .preview-close {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: transparent;
-            color: var(--text);
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .preview-close:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .preview-stage {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0b0b0b;
-        }
-        
-        .preview-img {
-            display: block;
-            width: 100%;
-            max-height: 75vh;
-            object-fit: contain;
-        }
-        
-        .preview-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(10, 10, 10, 0.7);
-            color: var(--text);
-            font-size: 1.6rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .preview-nav:hover {
-            background: var(--accent);
-        }
-        
-        .preview-nav[hidden] {
-            display: none;          /* needed because display:flex above would override [hidden] */
-        }
-        
-        .preview-prev { left: 12px; }
-        .preview-next { right: 12px; }
-        
-        .preview-footer {
-            padding: 10px 20px;
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.85rem;
-            min-height: 40px;
-        }
-        
         .skill-item:hover {
             transform: translateY(-5px);
             border-color: rgba(255, 59, 59, 0.3);
@@ -649,6 +526,12 @@
             font-size: 0.95rem;
             line-height: 1.7;
             margin-bottom: 20px;
+        }
+
+        .project-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         /* Education Section */
@@ -858,6 +741,123 @@
             font-weight: 700;
             color: white;
         }
+
+        /* Screenshot popup */
+        .preview-dialog {
+            border: none;
+            padding: 0;
+            background: transparent;
+            color: var(--text);
+            width: min(1100px, 94vw);
+            max-width: none;
+            max-height: 92vh;
+            margin: auto;
+            overflow: visible;
+        }
+
+        .preview-dialog[open] {
+            animation: previewIn 0.25s ease-out;
+        }
+
+        @keyframes previewIn {
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .preview-dialog::backdrop {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+        }
+
+        .preview-box {
+            background: var(--card);
+            border: 1px solid rgba(255, 59, 59, 0.3);
+            border-radius: 20px;
+            box-shadow: var(--glow), 0 30px 80px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .preview-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .preview-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: transparent;
+            color: var(--text);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .preview-close:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .preview-stage {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0b0b0b;
+        }
+
+        .preview-img {
+            display: block;
+            width: 100%;
+            max-height: 75vh;
+            min-height: 240px;        /* keeps the popup open even if an image fails to load */
+            object-fit: contain;
+        }
+
+        .preview-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(10, 10, 10, 0.7);
+            color: var(--text);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .preview-nav:hover {
+            background: var(--accent);
+        }
+
+        .preview-nav[hidden] {
+            display: none;          /* needed because display:flex above would override [hidden] */
+        }
+
+        .preview-prev { left: 12px; }
+        .preview-next { right: 12px; }
+
+        .preview-footer {
+            padding: 10px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            min-height: 40px;
+        }
     </style>
 </head>
 
@@ -887,7 +887,7 @@
             <div class="hero-content">
                 <div class="eyebrow">👋 Hello, I'm</div>
                 <h1 class="title">
-                    <span stye="color: 'white';">Affan Hamdan</span>
+                    <span>Affan Hamdan</span>
                 </h1>
                 <p class="subtitle">Information Technology Fresh Graduate</p>
                 <p class="description">
@@ -965,7 +965,7 @@
 
                 <article class="project-card">
                     <img class="project-image" src="Warehouse.png" alt="Warehouse Management System" />
-                
+
                     <div class="project-content">
                         <div class="tags">
                             <span class="tag">Full-Stack</span>
@@ -974,23 +974,24 @@
                             <span class="tag">PostgreSQL</span>
                             <span class="tag">Bootstrap</span>
                         </div>
-                
+
                         <h3>Warehouse Management System</h3>
-                
+
                         <p>
                             A warehouse management system built with ASP.NET Core and PostgreSQL
                             for managing inventory, stock levels, users, and warehouse operations.
                             Features include user authentication, inventory tracking, dashboard
                             statistics, pagination, and stock monitoring.
                         </p>
-                
+
                         <div class="project-actions">
+                            <!-- Paths are relative to index.html; the screenshots sit in the same folder -->
                             <button type="button" class="btn btn-ghost"
-                                    data-preview="images/warehouse-1.png, images/warehouse-2.png, images/warehouse-3.png, images/warehouse-4.png, images/warehouse-5.png"
+                                    data-preview="warehouse-1.png, warehouse-2.png, warehouse-3.png, warehouse-4.png, warehouse-5.png"
                                     data-title="Warehouse Management System">
                                 See preview
                             </button>
-                        
+
                             <a class="btn btn-primary"
                                href="https://github.com/Syrax-Prog/Warehouse"
                                target="_blank" rel="noreferrer">
@@ -1108,23 +1109,24 @@
         </div>
     </footer>
 
+    <!-- Screenshot preview popup -->
     <dialog id="previewDialog" class="preview-dialog" aria-labelledby="previewTitle">
         <div class="preview-box">
             <div class="preview-header">
                 <span class="preview-title" id="previewTitle">Preview</span>
                 <button type="button" class="preview-close" id="previewClose" aria-label="Close preview">✕</button>
             </div>
-    
+
             <div class="preview-stage">
                 <button type="button" class="preview-nav preview-prev" id="previewPrev" aria-label="Previous screenshot">‹</button>
                 <img id="previewImg" class="preview-img" alt="" />
                 <button type="button" class="preview-nav preview-next" id="previewNext" aria-label="Next screenshot">›</button>
             </div>
-    
+
             <div class="preview-footer" id="previewCounter"></div>
         </div>
     </dialog>
-    
+
     <!-- Scroll to Top Button -->
     <div class="scroll-top" id="scrollTop"></div>
 
@@ -1299,10 +1301,10 @@
         const previewCounter = document.getElementById("previewCounter");
         const previewPrev = document.getElementById("previewPrev");
         const previewNext = document.getElementById("previewNext");
-        
+
         let previewImages = [];
         let previewIndex = 0;
-        
+
         function showPreview(index) {
             // wrap around at both ends
             previewIndex = (index + previewImages.length) % previewImages.length;
@@ -1310,44 +1312,49 @@
             previewCounter.textContent =
                 previewImages.length > 1 ? `${previewIndex + 1} / ${previewImages.length}` : "";
         }
-        
+
+        // If an image can't be loaded, say which path failed instead of showing a blank box
+        previewImg.addEventListener("error", () => {
+            previewCounter.textContent = "Could not load: " + previewImages[previewIndex];
+        });
+
         document.querySelectorAll("[data-preview]").forEach((button) => {
             button.addEventListener("click", () => {
                 previewImages = button.dataset.preview
                     .split(",")
                     .map((s) => s.trim())
                     .filter(Boolean);
-        
+
                 const title = button.dataset.title || "Preview";
                 previewTitle.textContent = title;
                 previewImg.alt = title + " screenshot";
-        
+
                 const multiple = previewImages.length > 1;
                 previewPrev.hidden = !multiple;
                 previewNext.hidden = !multiple;
-        
+
                 showPreview(0);
                 previewDialog.showModal();
                 document.body.style.overflow = "hidden";   // stop the page scrolling behind the popup
             });
         });
-        
+
         previewPrev.addEventListener("click", () => showPreview(previewIndex - 1));
         previewNext.addEventListener("click", () => showPreview(previewIndex + 1));
         document.getElementById("previewClose").addEventListener("click", () => previewDialog.close());
-        
+
         // Click on the dark backdrop closes it (clicks on the backdrop target the <dialog> itself)
         previewDialog.addEventListener("click", (e) => {
             if (e.target === previewDialog) previewDialog.close();
         });
-        
+
         // Arrow keys flip through screenshots (Escape is handled by <dialog>)
         previewDialog.addEventListener("keydown", (e) => {
             if (previewImages.length < 2) return;
             if (e.key === "ArrowLeft") showPreview(previewIndex - 1);
             if (e.key === "ArrowRight") showPreview(previewIndex + 1);
         });
-        
+
         // Runs for Escape, the X button and backdrop clicks alike
         previewDialog.addEventListener("close", () => {
             document.body.style.overflow = "";
