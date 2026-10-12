@@ -401,6 +401,133 @@
             transition: all 0.3s ease;
         }
 
+        /* Project card buttons */
+        .project-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        button.btn {
+            font-family: inherit;   /* buttons don't inherit the page font by default */
+        }
+        
+        /* Screenshot popup */
+        .preview-dialog {
+            border: none;
+            padding: 0;
+            background: transparent;
+            color: var(--text);
+            width: min(1100px, 94vw);
+            max-width: none;
+            max-height: 92vh;
+            margin: auto;
+            overflow: visible;
+        }
+        
+        .preview-dialog[open] {
+            animation: previewIn 0.25s ease-out;
+        }
+        
+        @keyframes previewIn {
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .preview-dialog::backdrop {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+        }
+        
+        .preview-box {
+            background: var(--card);
+            border: 1px solid rgba(255, 59, 59, 0.3);
+            border-radius: 20px;
+            box-shadow: var(--glow), 0 30px 80px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+        
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .preview-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        
+        .preview-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: transparent;
+            color: var(--text);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .preview-close:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .preview-stage {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0b0b0b;
+        }
+        
+        .preview-img {
+            display: block;
+            width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+        }
+        
+        .preview-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(10, 10, 10, 0.7);
+            color: var(--text);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .preview-nav:hover {
+            background: var(--accent);
+        }
+        
+        .preview-nav[hidden] {
+            display: none;          /* needed because display:flex above would override [hidden] */
+        }
+        
+        .preview-prev { left: 12px; }
+        .preview-next { right: 12px; }
+        
+        .preview-footer {
+            padding: 10px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            min-height: 40px;
+        }
+        
         .skill-item:hover {
             transform: translateY(-5px);
             border-color: rgba(255, 59, 59, 0.3);
@@ -857,12 +984,19 @@
                             statistics, pagination, and stock monitoring.
                         </p>
                 
-                        <a class="btn btn-primary"
-                           href="https://github.com/Syrax-Prog/Warehouse"
-                           target="_blank"
-                           rel="noreferrer">
-                            View on GitHub →
-                        </a>
+                        <div class="project-actions">
+                            <button type="button" class="btn btn-ghost"
+                                    data-preview="Warehouse.png"
+                                    data-title="Warehouse Management System">
+                                See preview
+                            </button>
+                        
+                            <a class="btn btn-primary"
+                               href="https://github.com/Syrax-Prog/Warehouse"
+                               target="_blank" rel="noreferrer">
+                                View on GitHub →
+                            </a>
+                        </div>
                     </div>
                 </article>
             </div>
@@ -974,6 +1108,23 @@
         </div>
     </footer>
 
+    <dialog id="previewDialog" class="preview-dialog" aria-labelledby="previewTitle">
+        <div class="preview-box">
+            <div class="preview-header">
+                <span class="preview-title" id="previewTitle">Preview</span>
+                <button type="button" class="preview-close" id="previewClose" aria-label="Close preview">✕</button>
+            </div>
+    
+            <div class="preview-stage">
+                <button type="button" class="preview-nav preview-prev" id="previewPrev" aria-label="Previous screenshot">‹</button>
+                <img id="previewImg" class="preview-img" alt="" />
+                <button type="button" class="preview-nav preview-next" id="previewNext" aria-label="Next screenshot">›</button>
+            </div>
+    
+            <div class="preview-footer" id="previewCounter"></div>
+        </div>
+    </dialog>
+    
     <!-- Scroll to Top Button -->
     <div class="scroll-top" id="scrollTop"></div>
 
@@ -1137,6 +1288,69 @@
                 createParticle(e.clientX, e.clientY);
                 lastParticleTime = now;
             }
+        });
+
+        // ---------------------------------------------------------
+        // Screenshot preview popup
+        // ---------------------------------------------------------
+        const previewDialog = document.getElementById("previewDialog");
+        const previewImg = document.getElementById("previewImg");
+        const previewTitle = document.getElementById("previewTitle");
+        const previewCounter = document.getElementById("previewCounter");
+        const previewPrev = document.getElementById("previewPrev");
+        const previewNext = document.getElementById("previewNext");
+        
+        let previewImages = [];
+        let previewIndex = 0;
+        
+        function showPreview(index) {
+            // wrap around at both ends
+            previewIndex = (index + previewImages.length) % previewImages.length;
+            previewImg.src = previewImages[previewIndex];
+            previewCounter.textContent =
+                previewImages.length > 1 ? `${previewIndex + 1} / ${previewImages.length}` : "";
+        }
+        
+        document.querySelectorAll("[data-preview]").forEach((button) => {
+            button.addEventListener("click", () => {
+                previewImages = button.dataset.preview
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+        
+                const title = button.dataset.title || "Preview";
+                previewTitle.textContent = title;
+                previewImg.alt = title + " screenshot";
+        
+                const multiple = previewImages.length > 1;
+                previewPrev.hidden = !multiple;
+                previewNext.hidden = !multiple;
+        
+                showPreview(0);
+                previewDialog.showModal();
+                document.body.style.overflow = "hidden";   // stop the page scrolling behind the popup
+            });
+        });
+        
+        previewPrev.addEventListener("click", () => showPreview(previewIndex - 1));
+        previewNext.addEventListener("click", () => showPreview(previewIndex + 1));
+        document.getElementById("previewClose").addEventListener("click", () => previewDialog.close());
+        
+        // Click on the dark backdrop closes it (clicks on the backdrop target the <dialog> itself)
+        previewDialog.addEventListener("click", (e) => {
+            if (e.target === previewDialog) previewDialog.close();
+        });
+        
+        // Arrow keys flip through screenshots (Escape is handled by <dialog>)
+        previewDialog.addEventListener("keydown", (e) => {
+            if (previewImages.length < 2) return;
+            if (e.key === "ArrowLeft") showPreview(previewIndex - 1);
+            if (e.key === "ArrowRight") showPreview(previewIndex + 1);
+        });
+        
+        // Runs for Escape, the X button and backdrop clicks alike
+        previewDialog.addEventListener("close", () => {
+            document.body.style.overflow = "";
         });
     </script>
 </body>
